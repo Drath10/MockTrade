@@ -50,7 +50,7 @@ map<ll,ll> mp;
     }
     // for(auto it:os){
     //     cout<<it<<" ";
-    // }
+
     cout<<"YA"<<endl;
   
 
