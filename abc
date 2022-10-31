@@ -1,0 +1,71 @@
+               //  ॐ
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ld long double
+#define endl "\n"
+typedef vector<ll> vll;
+using vi = vector<int>;
+#define pb              push_back 
+#define Sort(a)         sort(a.begin(),a.end())
+const ll N = 2e5+10;
+const ll f = 1e17 ;
+
+vi g[N];
+vll ar(N,f),b(N,0),c(N,0);
+ll cost=0;
+
+pair<ll,ll> dfs(int v, int par){
+    if(ar[par]<ar[v]) ar[v]=ar[par];
+    ll x=(b[v]!=c[v]),y=0;
+    if(x) y=b[v];
+    for(auto ch: g[v]){
+        if(ch==par) continue;
+        auto p=dfs(ch,v);
+        x+=p.first;
+        y+=p.second;
+    }
+    ll rem=abs(x-2*y);
+    ll k=x-rem;
+    if(x-2*y<=0) y=rem;
+    else y=0;
+    cost+=(k*ar[v]);
+    return {rem,y};
+}
+
+void solve(){
+    int n;
+    cin>>n;
+    for (int i = 1; i <= n; ++i)
+    {
+        cin>>ar[i]>>b[i]>>c[i];
+    }
+    for (int i = 1; i < n; ++i)
+    {
+        int a,b;
+        cin>>a>>b;
+        g[a].pb(b);
+        g[b].pb(a);
+    }
+    if(dfs(1,0).first!=0){
+        cout<<"-1\n";
+        return;
+    }
+    cout<<cost;
+}                         
+
+int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    int t=1;
+    // cin>>t;
+    while(t--)
+        solve();
+
+    return 0;
+}
+
+
