@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+#define ll long long
+#define ld long double
+#define endl "\n"
+typedef vector<ll> vll;
+#define pb              push_back 
+#define fori(n)         for (ll i=0; i<n; i++) 
+#define forj(n)         for (ll j=0; j<n; j++) 
+#define fork(n)         for (ll k=0; k<n; k++) 
+#define forn(n)         for (ll i=1; i<=n; i++) 
+#define forn2(n)        for (ll j=1; j<=n; j++) 
+#define forn3(n)        for (ll k=1; k<=n; k++) 
+#define Sort(a)         sort(a.begin(),a.end())
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+  
+#define ordered_set tree<ll, null_type,less<ll>, rb_tree_tag,tree_order_statistics_node_update>
+
+void solve(){
+
+    ll n,m,k;
+    cin>>n>>m>>k;
+    ordered_set os;
+map<ll,ll> mp;
+
+    vll a(k);
+    fori(k){
+        cin>>a[i];
+        mp[a[i]]=i;
+    }
+    ll x=n*m-4;
+    
+    ll o=0;
+    for(ll i=k;i>=1;i--){
+       o=os.order_of_key(mp[i]);
+      // cout<<i<<" "<<mp[i]<<" "<<x<<" "<<o<<" "<<mp[i]-o<<endl;
+       if(mp[i]-o>x){
+            cout<<"TIDAK"<<endl;
+            mp.clear();
+            os.clear();
+            return;
+       }
+       else{
+            os.insert(mp[i]);
+       }
+    }
+    // for(auto it:os){
+    //     cout<<it<<" ";
+    // }
+    cout<<"YA"<<endl;
+  
+
+
+
+
+
+}
+
+int main(){
+
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    //Redeem yourself King.
+    ll n;
+    cin>>n;
+    while(n--)solve();
+    
+   
+    return 0;
+}
