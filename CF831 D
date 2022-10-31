@@ -48,7 +48,7 @@ map<ll,ll> mp;
             os.insert(mp[i]);
        }
     }
-    // for(auto it:os){
+
     //     cout<<it<<" ";
 
     cout<<"YA"<<endl;
