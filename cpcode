@@ -1,91 +1,54 @@
+//  ॐ
 #include <bits/stdc++.h>
- 
 using namespace std;
+
 #define ll long long
 #define ld long double
 #define endl "\n"
 typedef vector<ll> vll;
+using vi = vector<int>;
 #define pb              push_back 
-#define fori(n)         for (ll i=0; i<n; i++) 
-#define forj(n)         for (ll j=0; j<n; j++) 
-#define fork(n)         for (ll k=0; k<n; k++) 
-#define forn(n)         for (ll i=1; i<=n; i++) 
-#define forn2(n)        for (ll j=1; j<=n; j++) 
-#define forn3(n)        for (ll k=1; k<=n; k++) 
 #define Sort(a)         sort(a.begin(),a.end())
+const ll N = 1e5+10;
+const ll f = 1e17 ;
 
-const int N=1e5+10;
-    vector<ll> g[N];
-vll a(N);
-ll k[N];
-void bfs(){
-        queue<ll> q;
-        bool visited[N];
-        ll distance2[N];
-        ll x=1;
-        //ll k=1;
-        visited[x] = true;
-        distance2[x] = 0;
-        q.push(x);
-        //a[1]=1;
-        ll maxdis=0;
-        map<ll,ll> mp;
-        while (!q.empty()) {
-            ll s = q.front(); q.pop();
-    // process node s
-            for (auto u : g[s]) {
-                if (visited[u]) continue;
-                visited[u] = true;
-                distance2[u] = distance2[s]+1;
-                maxdis=max(maxdis,distance2[u]);
-                mp[distance2[u]]++;
-                //a[u]=k;                
-                q.push(u);
-            }
-            k[distance2[s]+1]++;
-    
-        }
-        ll sum=0,ans=0;
-        for(ll i=maxdis;i>=1;i--){
-            ans=max(sum+mp[i],ans);
-            sum+=k[i];
-        }
-        cout<<ans<<endl;
+vi g[N];
+
+pair<ll,ll> dfs(int v,int par){
+    ll y=0,x=0;
+    for(auto ch: g[v]){
+        if(ch==par) continue;
+        auto t=dfs(ch,v);
+        y=max(y,t.second);
+        x+=(t.first);
     }
-
-
-void solve(){
-
-    ll n;
-    cin>>n;
-    vll p(n+1);
-    for(ll i=2;i<=n;i++){
-        cin>>p[i];
-        g[i].pb(p[i]);
-        g[p[i]].pb(i);
-    }
-
-    bfs();
-    fori(n+3){
-        g[i].clear();
-        k[i]=0;
-    }
-    
-
-
-
-
+    y++;
+    x=max(x,y);
+    return {x,y};
 }
 
+void solve(){
+    int n;
+    cin>>n;
+    for (int i = 2; i <= n; ++i)
+    {
+        int x;
+        cin>>x;
+        g[i].pb(x);
+        g[x].pb(i);
+    }
+    cout<<dfs(1,0).first;
+}                         
+
 int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
 
+    int t=1;
+    // cin>>t;
+    while(t--)
+        solve();
 
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    //Redeem yourself King.
-    solve();
-    
-   
     return 0;
 }
